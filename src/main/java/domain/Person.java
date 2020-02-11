@@ -1,8 +1,10 @@
+package domain;
+
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Person.
+ * domain.Person.
  *
  * @author Natalia_Shipova
  */
