@@ -1,3 +1,4 @@
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.DisplayName;
@@ -15,14 +16,7 @@ class PersonTest {
     @Test
     void shouldHaveCorrectConstructor() {
         Person person = getPerson();
-
-        assertEquals("Ivan", person.getName());
-        assertEquals(42, person.getAge());
-
-        assertAll("person",
-                () -> assertEquals("Ivan", person.getName()),
-                () -> assertEquals(42, person.getAge())
-        );
+        assertThat(person).matches(p -> p.getAge() == 42 && "Ivan".equals(p.getName()));
     }
 
     @DisplayName("корректно увеличивает возраст")
@@ -30,24 +24,23 @@ class PersonTest {
     void birthDay() {
         Person person = getPerson();
         person.birthDay();
-
-        assertEquals(43, person.getAge());
+        assertThat(person.getAge()).isEqualTo(43);
     }
 
+    @DisplayName("корректно устанавливает возраст")
     @Test
     void setAge() {
         Person person = getPerson();
         person.setAge(18);
-
-        assertEquals(18, person.getAge());
+        assertThat(person.getAge()).isEqualTo(18);
     }
 
+    @DisplayName("корректно устанавливает имя")
     @Test
     void setName() {
         Person person = getPerson();
         person.setName("Vasiliy");
-
-        assertEquals("Vasiliy", person.getName());
+        assertThat(person.getName()).isEqualTo("Vasiliy");
     }
 
     private Person getPerson(){
