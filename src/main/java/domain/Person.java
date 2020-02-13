@@ -3,6 +3,8 @@ package domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
+
 /**
  * domain.Person.
  *
@@ -22,5 +24,12 @@ public class Person {
 
     public void birthDay() {
         this.age++;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Person person = (Person) o;
+        return age == person.age &&
+                Objects.equals(name, person.name);
     }
 }
