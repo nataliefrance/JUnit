@@ -25,8 +25,7 @@ public class PersonServiceImpl  implements PersonService {
 
     @Override
     public List<Person> getAll() {
-        //TODO: реализовать данный метод по технике Test-First
-        return null;
+        return dao.getAll();
     }
 
     @Override
