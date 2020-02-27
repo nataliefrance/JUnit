@@ -1,6 +1,7 @@
 package service;
 
 import dao.PersonDao;
+import dao.PersonNotFoundException;
 import domain.Person;
 
 import java.util.List;
@@ -30,8 +31,15 @@ public class PersonServiceImpl  implements PersonService {
 
     @Override
     public boolean existsWithName(String name) {
-        //TODO: реализовать данный метод по технике Test-First
-        return false;
+        if (name == null || name.isEmpty()) {
+            throw new PersonNotFoundException("Имя не может быть null или пустым.");
+        }
+
+        try {
+            return dao.getByName(name) != null;
+        } catch (PersonNotFoundException e) {
+            return false;
+        }
     }
 
     @Override

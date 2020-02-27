@@ -1,6 +1,9 @@
 package service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
@@ -55,11 +58,14 @@ class PersonServiceImplTest {
     }
 
     @Test
-    public void existsWithName(String name) {
-        when(personDao.getByName("Maria")).thenThrow(new PersonNotFoundException("Person с именем " + name + " не найден"));
+    public void existsWithName() {
+        when(personDao.getByName("Maria")).thenThrow(new PersonNotFoundException("Person с именем Maria не найден"));
         when(personDao.getByName("Ivan")).thenReturn(new Person(42, "Ivan"));
-        assertThat(personService.existsWithName("Ivan")).isNotNull();
-        assertThat(personService.existsWithName("Maria")).isFalse();
+
+        assertAll("personService",
+                () -> assertTrue(personService.existsWithName("Ivan")),
+                () -> assertFalse(personService.existsWithName("Maria"))
+        );
     }
 
     private List<Person> newPersonList() {
