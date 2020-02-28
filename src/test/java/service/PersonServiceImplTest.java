@@ -1,15 +1,20 @@
 package service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import dao.PersonDao;
+import dao.PersonDaoImpl;
 import dao.PersonNotFoundException;
 import domain.Person;
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -66,6 +71,22 @@ class PersonServiceImplTest {
                 () -> assertTrue(personService.existsWithName("Ivan")),
                 () -> assertFalse(personService.existsWithName("Maria"))
         );
+    }
+
+    /**
+     * Метод должен найти по имени в списке.
+     * Если такой есть - заменить,
+     * если такого нет - добавить.
+     */
+    @Test
+    public void save() {
+        Person maria = new Person(15, "Maria");
+        personService.save(maria);
+        assertEquals(personService.getByName("Maria"), maria);
+
+        Person newMaria = new Person(20, "Maria");
+        personService.save(newMaria);
+        assertNotEquals(personDao.getByName("Maria"), maria);
     }
 
     private List<Person> newPersonList() {

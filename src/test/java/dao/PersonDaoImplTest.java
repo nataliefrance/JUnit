@@ -77,7 +77,7 @@ class PersonDaoImplTest {
      */
     @Test
     void save() {
-        PersonDaoImpl personDao = newPersonDao();
+        PersonDao personDao = newPersonDao();
 
         Person maria = new Person(15, "Maria");
         personDao.save(maria);

@@ -42,8 +42,13 @@ public class PersonServiceImpl  implements PersonService {
         }
     }
 
+    /**
+     * Метод должен найти по имени в списке.
+     * Если такой есть - заменить,
+     * если такого нет - добавить.
+     */
     @Override
     public void save(Person p) {
-        //TODO: реализовать данный метод по технике Test-First
+        dao.save(p);
     }
 }
